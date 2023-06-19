@@ -19,11 +19,12 @@ Installs rustup.
 ---
 
 ### 🦀 `rust-check`
-Executes various rust checks. Properly caches crates and builds.
+Executes rust lints, checks and tests. Properly caches crates and builds.
 - `cargo fmt`
 - `cargo clippy`
 - `cargo check`
 - `cargo audit`
+- `cargo test`
 
 **Inputs**
 - `rust-version` (Optional): Rust toolchain version to use. Default is `beta`
