@@ -1,5 +1,5 @@
-name: rust-check
-run-name: Rust check
+name: rust-checks
+run-name: Rust checks
 
 on:
   workflow_call:
@@ -10,7 +10,7 @@ on:
         required: false
         default: beta
       workdir:
-        description: 'Directory of the Rust project to check. Default is root of the repository. Useful for monorepos'
+        description: 'Directory of the Rust project to check. Default is the root of the repository. Useful for monorepos'
         type: string
         required: false
         default: ''

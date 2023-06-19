@@ -18,7 +18,7 @@ Installs rustup.
 > TODO: I still have to figure out how to properly cache this.
 ---
 
-### 🦀 `rust-check`
+### 🦀 `rust-checks`
 Executes rust lints, checks and tests. Properly caches crates and builds.
 - `cargo fmt`
 - `cargo clippy`
@@ -29,4 +29,13 @@ Executes rust lints, checks and tests. Properly caches crates and builds.
 **Inputs**
 - `rust-version` (Optional): Rust toolchain version to use. Default is `beta`
 - `workdir` (Optional): Directory of the Rust project to check. Default is root of the repository. Useful for monorepos
+---
+
+### 🦀 `docker-build`
+Builds and publishes a Docker image to the Github Registry.
+
+**Inputs**
+- `image`: Image name. Example: `ghcr.io/giyomoon/workflows`
+- `platforms` (Optional): Platforms to build the image for. Default: `linux/amd64,linux/arm64`
+- `workdir` (Optional): Directory of the Dockerfile to build. Default is the root of the repository. Useful for monorepos
 ---
