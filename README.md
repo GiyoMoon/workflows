@@ -25,7 +25,7 @@ Executes rust lints, checks and tests. Properly caches crates and builds.
 Builds and publishes a Docker image to the Github Registry.
 
 **Inputs**
-- `image`: Image name. Example: `ghcr.io/giyomoon/workflows`
+- `images`: Image name. Example: `ghcr.io/giyomoon/workflows`
 - `platforms` (Optional): Platforms to build the image for. Default: `linux/amd64,linux/arm64`
 - `workdir` (Optional): Directory of the Dockerfile to build. Default is the root of the repository. Useful for monorepos
 ---
