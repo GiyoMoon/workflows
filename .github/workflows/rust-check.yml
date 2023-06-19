@@ -1,0 +1,57 @@
+name: rust-check
+run-name: Rust check
+
+on:
+  workflow_call:
+    inputs:
+      rust-version:
+        description: 'Rust toolchain version to use. Default is `beta`'
+        type: string
+        required: false
+        default: beta
+      workdir:
+        description: 'Directory of the Rust project to check. Default is root of the repository. Useful for monorepos'
+        type: string
+        required: false
+        default: ''
+
+defaults:
+  run:
+    shell: bash
+    working-directory: ${{ inputs.workdir }}
+
+jobs:
+  rust-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+      - name: Install Rust
+        uses: ./github/workflows/rust-install.yml
+        with:
+          toolchain: ${{ inputs.rust-version }}
+          components: rustfmt, clippy
+      - name: Cargo cache
+        uses: actions/cache@v3
+        continue-on-error: false
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-
+      - name: Lint
+        run: |
+          cargo fmt --all -- --check
+          cargo clippy -- -D warnings
+      - name: Check/Audit
+        run: cargo check
+      - name: audit
+        run: |
+          rm -rf ~/.cargo/advisory-db
+          cargo audit
+      - name: Test
+        run: cargo test
