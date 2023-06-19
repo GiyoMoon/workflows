@@ -8,29 +8,23 @@ on:
         description: 'Rust toolchain version to use. Default is `beta`'
         type: string
         required: false
-        default: beta
+        default: 'beta'
       workdir:
         description: 'Directory of the Rust project to check. Default is the root of the repository. Useful for monorepos'
         type: string
         required: false
-        default: ''
-
-defaults:
-  run:
-    shell: bash
-    working-directory: ${{ inputs.workdir }}
+        default: '.'
 
 jobs:
-  rust-check:
+  rust-checks:
     runs-on: ubuntu-latest
     steps:
       - name: Check out
         uses: actions/checkout@v3
-      - name: Install Rust
-        uses: ./github/workflows/rust-install.yml
-        with:
-          toolchain: ${{ inputs.rust-version }}
-          components: rustfmt, clippy
+      - name: Install Rust toolchain
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain ${{ inputs.rust-version }} --profile minimal -c rustfmt,clippy -y
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
       - name: Cargo cache
         uses: actions/cache@v3
         continue-on-error: false
@@ -43,15 +37,24 @@ jobs:
             target/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: ${{ runner.os }}-cargo-
+      - name: Install tools
+        run: |
+          cargo install cargo-audit
       - name: Lint
         run: |
+          cd ${{ inputs.workdir }}
           cargo fmt --all -- --check
           cargo clippy -- -D warnings
       - name: Check/Audit
-        run: cargo check
+        run: |
+          cd ${{ inputs.workdir }}
+          cargo check
       - name: audit
         run: |
+          cd ${{ inputs.workdir }}
           rm -rf ~/.cargo/advisory-db
           cargo audit
       - name: Test
-        run: cargo test
+        run: |
+          cd ${{ inputs.workdir }}
+          cargo test

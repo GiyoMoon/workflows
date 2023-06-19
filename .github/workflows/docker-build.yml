@@ -26,7 +26,7 @@ jobs:
       - name: Check out
         uses: actions/checkout@v3
       - name: Lint Dockerfile with ignore
-        uses: hadolint/hadolint-action@v2
+        uses: hadolint/hadolint-action@v3.1.0
         with:
           dockerfile: ${{ inputs.workdir }}/Dockerfile
       - name: Set up QEMU
@@ -37,7 +37,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ inputs.image }}
+          images: ${{ inputs.images }}
           tags: |
             type=semver,pattern={{version}}
       - name: Login to GitHub Container Registry
@@ -53,5 +53,5 @@ jobs:
           push: true
           platforms: ${{ inputs.platforms }}
           tags: ${{ steps.meta.outputs.tags }}
-          cache-from: type=registry,ref=${{ inputs.image }}:buildcache
-          cache-to: type=registry,ref=${{ inputs.image }}:buildcache,mode=max
+          cache-from: type=registry,ref=${{ inputs.images }}:buildcache
+          cache-to: type=registry,ref=${{ inputs.images }}:buildcache,mode=max

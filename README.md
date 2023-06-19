@@ -8,16 +8,6 @@
 
 <br />
 
-### 🦀 `rust-install`
-Installs rustup.
-
-**Inputs**
-- `rust-version` (Optional): Rust toolchain version to use. Default is `beta`
-- `components` (Optional): Additional toolchain components to install. For example `rustfmt,clippy`
-
-> TODO: I still have to figure out how to properly cache this.
----
-
 ### 🦀 `rust-checks`
 Executes rust lints, checks and tests. Properly caches crates and builds.
 - `cargo fmt`
@@ -31,7 +21,7 @@ Executes rust lints, checks and tests. Properly caches crates and builds.
 - `workdir` (Optional): Directory of the Rust project to check. Default is root of the repository. Useful for monorepos
 ---
 
-### 🦀 `docker-build`
+### 🐳 `docker-build`
 Builds and publishes a Docker image to the Github Registry.
 
 **Inputs**
