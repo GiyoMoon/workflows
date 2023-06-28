@@ -1,5 +1,5 @@
-name: rust-checks
-run-name: Rust checks
+name: rust-audit
+run-name: Rust audit
 
 on:
   workflow_call:
@@ -16,7 +16,7 @@ on:
         default: '.'
 
 jobs:
-  rust-checks:
+  rust-audit:
     runs-on: ubuntu-latest
     steps:
       - name: Check out
@@ -37,16 +37,11 @@ jobs:
             target/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: ${{ runner.os }}-cargo-
-      - name: Lint
+      - name: Install tools
+        run: |
+          cargo install cargo-audit
+      - name: Audit
         run: |
           cd ${{ inputs.workdir }}
-          cargo fmt --all -- --check
-          cargo clippy -- -D warnings
-      - name: Check
-        run: |
-          cd ${{ inputs.workdir }}
-          cargo check
-      - name: Test
-        run: |
-          cd ${{ inputs.workdir }}
-          cargo test
+          rm -rf ~/.cargo/advisory-db
+          cargo audit

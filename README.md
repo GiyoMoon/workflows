@@ -13,8 +13,15 @@ Executes rust lints, checks and tests. Properly caches crates and builds.
 - `cargo fmt`
 - `cargo clippy`
 - `cargo check`
-- `cargo audit`
 - `cargo test`
+
+**Inputs**
+- `rust-version` (Optional): Rust toolchain version to use. Default is `beta`
+- `workdir` (Optional): Directory of the Rust project to check. Default is root of the repository. Useful for monorepos
+---
+
+### 🦀 `rust-audit`
+Executes rust audit. Properly caches crates and builds. Should be used in combination with the schedule event to ensure frequent audits.
 
 **Inputs**
 - `rust-version` (Optional): Rust toolchain version to use. Default is `beta`
