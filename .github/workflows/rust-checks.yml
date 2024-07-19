@@ -39,16 +39,16 @@ jobs:
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: ${{ runner.os }}-cargo-
 
+      - name: Check
+        run: |
+          cd ${{ inputs.workdir }}
+          cargo check
+
       - name: Lint
         run: |
           cd ${{ inputs.workdir }}
           cargo fmt --all -- --check
           cargo clippy -- -D warnings
-
-      - name: Check
-        run: |
-          cd ${{ inputs.workdir }}
-          cargo check
 
       - name: Test
         run: |
