@@ -10,9 +10,9 @@
 
 ### 🦀 `rust-checks`
 Executes rust lints, checks and tests. Caches crates and builds.
+- `cargo check`
 - `cargo fmt`
 - `cargo clippy`
-- `cargo check`
 - `cargo test`
 
 **Inputs**
@@ -32,7 +32,7 @@ Executes rust audit. Caches crates and builds. Should be used in combination wit
 Execute the `lint` script from your `package.json`. Uses pnpm and caches the store.
 
 **Inputs**
-- `node-version` (Optional): Nodejs version to use. Default is `lts`
+- `node-version` (Optional): Nodejs version to use. Default is `lts/*`
 - `workdir` (Optional): Directory of the javascript code to lint. Default is the root of the repository. Useful for monorepos
 ---
 
@@ -41,6 +41,6 @@ Builds and publishes a Docker image to the Github Registry.
 
 **Inputs**
 - `images`: Image name. Example: `ghcr.io/giyomoon/workflows`
-- `platforms` (Optional): Platforms to build the image for. Default: `linux/amd64,linux/arm64`
+- `platforms` (Optional): Platforms to build the image for. Default: `linux/amd64`
 - `workdir` (Optional): Directory of the Dockerfile to build. Default is the root of the repository. Useful for monorepos
 ---
