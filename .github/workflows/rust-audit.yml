@@ -33,11 +33,13 @@ jobs:
         continue-on-error: false
         with:
           path: |
-            ~/.cargo/bin
             ~/.cargo/registry
-            **/target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: ${{ runner.os }}-cargo-
+            ~/.cargo/git
+            ${{ inputs.workdir }}/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles(format('{0}/{1}',inputs.workdir,'Cargo.lock')) }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-${{ hashFiles(format('{0}/{1}',inputs.workdir,'Cargo.lock')) }}
+            ${{ runner.os }}-cargo
 
       - name: Install tools
         run: |
