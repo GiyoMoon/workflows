@@ -19,7 +19,7 @@ on:
         description: 'Directory of the Dockerfile to build. Default is the root of the repository. Useful for monorepos'
         type: string
         required: false
-        default: ''
+        default: '.'
 
 jobs:
   docker-build:
@@ -60,7 +60,7 @@ jobs:
         env:
           DOCKER_BUILD_RECORD_UPLOAD: false
         with:
-          context: "{{defaultContext}}${{ inputs.workdir && ':' }}${{ inputs.workdir }}"
+          context: "{{defaultContext}}:${{ inputs.workdir }}"
           push: true
           platforms: ${{ inputs.platforms }}
           tags: ${{ steps.meta.outputs.tags }}
