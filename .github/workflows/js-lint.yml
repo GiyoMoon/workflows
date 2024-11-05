@@ -9,6 +9,11 @@ on:
         type: string
         required: false
         default: 'lts/*'
+      pnpm-version:
+        description: 'pnpm version to use. Default is `latest`'
+        type: string
+        required: false
+        default: 'latest'
       workdir:
         description: 'Directory of the javascript code to lint. Default is the root of the repository. Useful for monorepos'
         type: string
@@ -30,7 +35,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: latest
+          version: ${{ inputs.pnpm-version }}
           run_install: false
 
       - name: Get pnpm store dir

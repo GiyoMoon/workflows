@@ -33,6 +33,7 @@ Execute the `lint` script from your `package.json`. Uses pnpm and caches the sto
 
 **Inputs**
 - `node-version` (Optional): Nodejs version to use. Default is `lts/*`
+- `pnpm-version` (Optional): pnpm version to use. Default is `latest`
 - `workdir` (Optional): Directory of the javascript code to lint. Default is the root of the repository. Useful for monorepos
 ---
 
